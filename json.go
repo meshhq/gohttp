@@ -1,4 +1,4 @@
-package blaster
+package gohttp
 
 import (
 	"bytes"
@@ -9,6 +9,16 @@ import (
 	"log"
 	"os"
 )
+
+func JSONData(params interface{}) (*bytes.Buffer, error) {
+	jsonData, err := json.Marshal(params)
+	if err != nil {
+		return nil, err
+	}
+
+	buffer := bytes.NewBuffer(jsonData)
+	return buffer, nil
+}
 
 func ParseJSON(data io.Reader) (map[string]interface{}, error) {
 	jsonData, err := ioutil.ReadAll(data)
