@@ -11,6 +11,24 @@ type Client struct {
 	Client  *http.Client
 }
 
+// HTTPRequest models an HTTP request sumbitted to the controller
+// for processing.
+type Request struct {
+
+	// HTTP Method for the request
+	Method string
+
+	// Request URL
+	URL string
+
+	// Params models the body of the request as a hashmap.
+	Body map[string]interface{}
+}
+
+type successFunc func(http.Request, map[string]interface{})
+
+type failuerFunc func(http.Request, error)
+
 func NewClient(baseURL string, headers http.Header) Client {
 	return Client{baseURL, headers, &http.Client{}}
 }
@@ -24,6 +42,10 @@ func (c *Client) Get(url string) (map[string]interface{}, error) {
 
 	req.Header = c.Headers
 	return performRequest(req, c.Client)
+}
+
+func (c *Client) PostWithBlock(r Request, s successFunc, f failuerFunc) {
+
 }
 
 func (c *Client) Post(url string, params interface{}) (map[string]interface{}, error) {
@@ -77,5 +99,8 @@ func performRequest(r *http.Request, c *http.Client) (map[string]interface{}, er
 	}
 	defer resp.Body.Close()
 	fmt.Printf("Response: %v\n", resp)
+	if resp.StatusCode != http.StatusOK {
+		return nil, err
+	}
 	return ParseJSON(resp.Body)
 }
