@@ -25,10 +25,6 @@ type Request struct {
 	Body map[string]interface{}
 }
 
-type successFunc func(http.Request, map[string]interface{})
-
-type failuerFunc func(http.Request, error)
-
 func NewClient(baseURL string, headers http.Header) Client {
 	return Client{baseURL, headers, &http.Client{}}
 }
@@ -42,10 +38,6 @@ func (c *Client) Get(url string) (map[string]interface{}, error) {
 
 	req.Header = c.Headers
 	return performRequest(req, c.Client)
-}
-
-func (c *Client) PostWithBlock(r Request, s successFunc, f failuerFunc) {
-
 }
 
 func (c *Client) Post(url string, params interface{}) (map[string]interface{}, error) {
@@ -91,6 +83,14 @@ func (c *Client) Patch(url string, params map[string]interface{}) (map[string]in
 	return performRequest(req, c.Client)
 }
 
+//------------------------------------------------------------------------------
+// @Block Based Requests
+//------------------------------------------------------------------------------
+
+func (c *Client) PostWithBlock(r Request, s func(http.Request, map[string]interface{}), f func(http.Request, error)) {
+
+}
+
 func performRequest(r *http.Request, c *http.Client) (map[string]interface{}, error) {
 	fmt.Printf("Performing Request: %v\n", r)
 	resp, err := c.Do(r)
@@ -99,7 +99,7 @@ func performRequest(r *http.Request, c *http.Client) (map[string]interface{}, er
 	}
 	defer resp.Body.Close()
 	fmt.Printf("Response: %v\n", resp)
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode != http.StatusOK || resp.StatusCode != http.StatusCreated {
 		return nil, err
 	}
 	return ParseJSON(resp.Body)
