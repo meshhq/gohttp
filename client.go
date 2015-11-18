@@ -113,16 +113,15 @@ func (c *Client) Patch(url string, params map[string]interface{}) (map[string]in
 }
 
 func performRequest(r *http.Request, c *http.Client) (map[string]interface{}, error) {
-	fmt.Printf("Performing Request: %v\n", r)
+	fmt.Printf("Performing request: %v\n", r)
 	resp, err := c.Do(r)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
-	fmt.Printf("Response: %v\n", resp)
+	fmt.Printf("Got response: %v\n", resp)
 	if (resp.StatusCode != http.StatusOK) && (resp.StatusCode != http.StatusCreated) {
-		err = fmt.Errorf("Unprocessable response code encountered: %v", resp.StatusCode)
-		return nil, err
+		return nil, fmt.Errorf("Unprocessable response code encountered: %v", resp.StatusCode)
 	}
 	return ParseJSON(resp.Body)
 }
