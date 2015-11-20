@@ -5,27 +5,6 @@ import (
 	"net/http"
 )
 
-// Client models an HTTP client
-type Client struct {
-	BaseURL string
-	Headers http.Header
-	Client  *http.Client
-}
-
-// Request models an HTTP request sumbitted to the controller
-// for processing.
-type Request struct {
-
-	// HTTP Method for the request
-	Method string
-
-	// Request URL
-	URL string
-
-	// Params models the body of the request as a hashmap.
-	Body map[string]interface{}
-}
-
 const (
 	// GET is a constant for the HTTP GET method.
 	GET = "GET"
@@ -39,6 +18,22 @@ const (
 	// PATCH is a constant for the HTTP PATCH method.
 	PATCH = "PATCH"
 )
+
+// Client models an HTTP client
+type Client struct {
+
+	// BaseURL models the base URL to be used for all requests issues by
+	// the Client.
+	BaseURL string
+
+	// Headers model the global headers to be used for all requests issued
+	// by the client.
+	Headers http.Header
+
+	// Client is the underlying `http.Client` object that is used to issue
+	// requests.
+	Client *http.Client
+}
 
 func NewClient(baseURL string, headers http.Header) Client {
 	return Client{baseURL, headers, &http.Client{}}
