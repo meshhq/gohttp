@@ -10,6 +10,6 @@ type Request struct {
 	// URL models the API route to be used for the request.
 	URL string
 
-	// Bodel models the request body to be used for the request.
+	// Body models the request body to be used for the request.
 	Body map[string]interface{}
 }

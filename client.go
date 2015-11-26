@@ -35,10 +35,12 @@ type Client struct {
 	Client *http.Client
 }
 
+// NewClient instantiates a new instance of a gohttp.Client.
 func NewClient(baseURL string, headers http.Header) Client {
 	return Client{baseURL, headers, &http.Client{}}
 }
 
+// Execute executes the HTTP request described with the given `gohttp.Request`.
 func (c *Client) Execute(r *Request) (map[string]interface{}, error) {
 	switch r.Method {
 	case GET:
@@ -53,6 +55,7 @@ func (c *Client) Execute(r *Request) (map[string]interface{}, error) {
 	return nil, nil
 }
 
+// Get performs an HTTP GET request with the supplied URL string.
 func (c *Client) Get(url string) (map[string]interface{}, error) {
 	URL := c.BaseURL + url
 	req, err := http.NewRequest("GET", URL, nil)
@@ -64,6 +67,8 @@ func (c *Client) Get(url string) (map[string]interface{}, error) {
 	return performRequest(req, c.Client)
 }
 
+// Post performs an HTTP POST request with the supplied URL string and
+// parameters.
 func (c *Client) Post(url string, params interface{}) (map[string]interface{}, error) {
 	jsonData, err := JSONData(params)
 	if err != nil {
@@ -80,6 +85,7 @@ func (c *Client) Post(url string, params interface{}) (map[string]interface{}, e
 	return performRequest(req, c.Client)
 }
 
+// Delete performs an HTTP DELETE request with the supplied URL string.
 func (c *Client) Delete(url string) (map[string]interface{}, error) {
 	URL := c.BaseURL + url
 	req, err := http.NewRequest("Delete", URL, nil)
@@ -91,6 +97,8 @@ func (c *Client) Delete(url string) (map[string]interface{}, error) {
 	return performRequest(req, c.Client)
 }
 
+// Patch performs an HTTP PATCH request with the supplied URL string and
+// parameters.
 func (c *Client) Patch(url string, params map[string]interface{}) (map[string]interface{}, error) {
 	jsonData, err := JSONData(params)
 	if err != nil {
@@ -125,6 +133,6 @@ func performRequest(r *http.Request, c *http.Client) (map[string]interface{}, er
 // @Block Based Requests
 //------------------------------------------------------------------------------
 
-func (c *Client) PostWithBlock(r Request, s func(http.Request, map[string]interface{}), f func(http.Request, error)) {
-
-}
+// func (c *Client) PostWithBlock(r Request, s func(http.Request, map[string]interface{}), f func(http.Request, error)) {
+//
+// }

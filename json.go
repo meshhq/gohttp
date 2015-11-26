@@ -10,6 +10,7 @@ import (
 	"os"
 )
 
+// JSONData mashalls an interface{} to a *byters.Buffer.
 func JSONData(params interface{}) (*bytes.Buffer, error) {
 	jsonData, err := json.Marshal(params)
 	if err != nil {
@@ -20,6 +21,7 @@ func JSONData(params interface{}) (*bytes.Buffer, error) {
 	return buffer, nil
 }
 
+// ParseJSON parses the data from an io.Reader into a map[string]interface{}.
 func ParseJSON(data io.Reader) (map[string]interface{}, error) {
 	jsonData, err := ioutil.ReadAll(data)
 	if err != nil {
@@ -37,6 +39,8 @@ func ParseJSON(data io.Reader) (map[string]interface{}, error) {
 	return JSONMap, err
 }
 
+// PrettyPrint prints a JSON representation in an formatted manner to the
+// standard output.
 func PrettyPrint(item interface{}) {
 	b, err := json.Marshal(item)
 	if err != nil {
