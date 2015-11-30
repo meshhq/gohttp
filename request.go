@@ -11,5 +11,5 @@ type Request struct {
 	URL string
 
 	// Body models the request body to be used for the request.
-	Body map[string]interface{}
+	Body interface{}
 }

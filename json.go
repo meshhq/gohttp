@@ -29,14 +29,17 @@ func ParseJSON(data io.Reader) (map[string]interface{}, error) {
 		return nil, err
 	}
 
-	var response interface{}
-	err = json.Unmarshal(jsonData, &response)
-	if err != nil {
-		fmt.Printf("Failed to parse json with error %v\n", err)
-		return nil, err
+	if HasData(jsonData) {
+		var response interface{}
+		err = json.Unmarshal(jsonData, &response)
+		if err != nil {
+			fmt.Printf("Failed to parse json with error: %v\n", err)
+			return nil, err
+		}
+		JSONMap := response.(map[string]interface{})
+		return JSONMap, err
 	}
-	JSONMap := response.(map[string]interface{})
-	return JSONMap, err
+	return map[string]interface{}{}, nil
 }
 
 // PrettyPrint prints a JSON representation in an formatted manner to the
@@ -50,4 +53,11 @@ func PrettyPrint(item interface{}) {
 	var out bytes.Buffer
 	json.Indent(&out, b, "", "\t")
 	out.WriteTo(os.Stdout)
+}
+
+func HasData(slice []byte) bool {
+	for range slice {
+		return true
+	}
+	return false
 }

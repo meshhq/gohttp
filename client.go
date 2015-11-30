@@ -37,11 +37,18 @@ type Client struct {
 
 // NewClient instantiates a new instance of a gohttp.Client.
 func NewClient(baseURL string, headers http.Header) Client {
+	if headers == nil {
+		headers = http.Header{}
+	}
 	return Client{baseURL, headers, &http.Client{}}
 }
 
+func (c *Client) SetHeader(header string, value string) {
+	c.Headers.Add(header, value)
+}
+
 // Execute executes the HTTP request described with the given `gohttp.Request`.
-func (c *Client) Execute(r *Request) (map[string]interface{}, error) {
+func (c *Client) Execute(r *Request) (*Response, error) {
 	switch r.Method {
 	case GET:
 		return c.Get(r.URL)
@@ -56,7 +63,7 @@ func (c *Client) Execute(r *Request) (map[string]interface{}, error) {
 }
 
 // Get performs an HTTP GET request with the supplied URL string.
-func (c *Client) Get(url string) (map[string]interface{}, error) {
+func (c *Client) Get(url string) (*Response, error) {
 	URL := c.BaseURL + url
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
@@ -69,12 +76,12 @@ func (c *Client) Get(url string) (map[string]interface{}, error) {
 
 // Post performs an HTTP POST request with the supplied URL string and
 // parameters.
-func (c *Client) Post(url string, params interface{}) (map[string]interface{}, error) {
+func (c *Client) Post(url string, params interface{}) (*Response, error) {
 	jsonData, err := JSONData(params)
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Printf("JSON Data: %v\n", jsonData)
 	URL := c.BaseURL + url
 	req, err := http.NewRequest("POST", URL, jsonData)
 	if err != nil {
@@ -86,7 +93,7 @@ func (c *Client) Post(url string, params interface{}) (map[string]interface{}, e
 }
 
 // Delete performs an HTTP DELETE request with the supplied URL string.
-func (c *Client) Delete(url string) (map[string]interface{}, error) {
+func (c *Client) Delete(url string) (*Response, error) {
 	URL := c.BaseURL + url
 	req, err := http.NewRequest("Delete", URL, nil)
 	if err != nil {
@@ -99,14 +106,14 @@ func (c *Client) Delete(url string) (map[string]interface{}, error) {
 
 // Patch performs an HTTP PATCH request with the supplied URL string and
 // parameters.
-func (c *Client) Patch(url string, params map[string]interface{}) (map[string]interface{}, error) {
+func (c *Client) Patch(url string, params interface{}) (*Response, error) {
 	jsonData, err := JSONData(params)
 	if err != nil {
 		return nil, err
 	}
 
 	URL := c.BaseURL + url
-	req, err := http.NewRequest("POST", URL, jsonData)
+	req, err := http.NewRequest(PATCH, URL, jsonData)
 	if err != nil {
 		return nil, err
 	}
@@ -115,18 +122,21 @@ func (c *Client) Patch(url string, params map[string]interface{}) (map[string]in
 	return performRequest(req, c.Client)
 }
 
-func performRequest(r *http.Request, c *http.Client) (map[string]interface{}, error) {
+func performRequest(r *http.Request, c *http.Client) (*Response, error) {
 	fmt.Printf("Performing request: %v\n", r)
 	resp, err := c.Do(r)
 	if err != nil {
+		fmt.Printf("Error performing request response: %v\n", err)
 		return nil, err
 	}
-	defer resp.Body.Close()
+
 	fmt.Printf("Got response: %v\n", resp)
-	if (resp.StatusCode != http.StatusOK) && (resp.StatusCode != http.StatusCreated) {
+	if (resp.StatusCode != http.StatusOK) && (resp.StatusCode != http.StatusCreated) && (resp.StatusCode != http.StatusNoContent) {
 		return nil, fmt.Errorf("Unprocessable response code encountered: %v", resp.StatusCode)
 	}
-	return ParseJSON(resp.Body)
+
+	defer resp.Body.Close()
+	return NewResponse(resp)
 }
 
 //------------------------------------------------------------------------------

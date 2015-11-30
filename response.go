@@ -1,5 +1,7 @@
 package gohttp
 
+import "net/http"
+
 // Response models the response from HTTP request.
 type Response struct {
 
@@ -14,4 +16,16 @@ type Response struct {
 
 	// Error represents any error that may have occured during processing.
 	Error error
+}
+
+// NewResponse builds a `gohttp.Response` object from an `http.Response` object.
+func NewResponse(resp *http.Response) (*Response, error) {
+	json, err := ParseJSON(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return &Response{
+		Code: resp.StatusCode,
+		Body: json,
+	}, err
 }
