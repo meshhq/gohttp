@@ -1,0 +1,5 @@
+{
+	"ImportPath": "github.com/mercambia/gohttp",
+	"GoVersion": "go1.5.1",
+	"Deps": []
+}
