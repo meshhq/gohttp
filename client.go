@@ -48,18 +48,23 @@ func (c *Client) SetHeader(header string, value string) {
 }
 
 // Execute executes the HTTP request described with the given `gohttp.Request`.
-func (c *Client) Execute(r *Request) (*Response, error) {
-	switch r.Method {
+func (c *Client) Execute(req *Request) (*Response, error) {
+	var response *Response
+	var err error
+	switch req.Method {
 	case GET:
-		return c.Get(r.URL)
+		response, err = c.Get(req.URL)
 	case POST:
-		return c.Post(r.URL, r.Body)
+		response, err = c.Post(req.URL, req.Body)
 	case DELETE:
-		return c.Delete(r.URL)
+		response, err = c.Delete(req.URL)
 	case PATCH:
-		return c.Patch(r.URL, r.Body)
+		response, err = c.Patch(req.URL, req.Body)
 	}
-	return nil, nil
+	if response != nil {
+		response.Request = req
+	}
+	return response, err
 }
 
 // Get performs an HTTP GET request with the supplied URL string.
@@ -95,7 +100,7 @@ func (c *Client) Post(url string, params interface{}) (*Response, error) {
 // Delete performs an HTTP DELETE request with the supplied URL string.
 func (c *Client) Delete(url string) (*Response, error) {
 	URL := c.BaseURL + url
-	req, err := http.NewRequest("Delete", URL, nil)
+	req, err := http.NewRequest("DELETE", URL, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +118,7 @@ func (c *Client) Patch(url string, params interface{}) (*Response, error) {
 	}
 
 	URL := c.BaseURL + url
-	req, err := http.NewRequest(PATCH, URL, jsonData)
+	req, err := http.NewRequest("PUT", URL, jsonData)
 	if err != nil {
 		return nil, err
 	}

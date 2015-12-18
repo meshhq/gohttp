@@ -16,6 +16,9 @@ type Response struct {
 
 	// Error represents any error that may have occured during processing.
 	Error error
+
+	// Request is the gohttp.Request object used to generate the response.
+	Request *Request
 }
 
 // NewResponse builds a `gohttp.Response` object from an `http.Response` object.
