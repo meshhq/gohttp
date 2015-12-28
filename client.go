@@ -36,11 +36,15 @@ type Client struct {
 }
 
 // NewClient instantiates a new instance of a gohttp.Client.
-func NewClient(baseURL string, headers http.Header) Client {
+func NewClient(baseURL string, headers http.Header) *Client {
 	if headers == nil {
 		headers = http.Header{}
 	}
-	return Client{baseURL, headers, &http.Client{}}
+	client := new(Client)
+	client.BaseURL = baseURL
+	client.Headers = headers
+	client.Client = &http.Client{}
+	return client
 }
 
 func (c *Client) SetHeader(header string, value string) {
