@@ -122,7 +122,7 @@ func (c *Client) Patch(url string, params interface{}) (*Response, error) {
 	}
 
 	URL := c.BaseURL + url
-	req, err := http.NewRequest("PUT", URL, jsonData)
+	req, err := http.NewRequest("PATCH", URL, jsonData)
 	if err != nil {
 		return nil, err
 	}
