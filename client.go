@@ -90,7 +90,7 @@ func (c *Client) Post(url string, params interface{}) (*Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	fmt.Printf("JSON Data: %v\n", jsonData)
+
 	URL := c.BaseURL + url
 	req, err := http.NewRequest("POST", URL, jsonData)
 	if err != nil {
