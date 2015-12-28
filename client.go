@@ -132,14 +132,12 @@ func (c *Client) Patch(url string, params interface{}) (*Response, error) {
 }
 
 func performRequest(r *http.Request, c *http.Client) (*Response, error) {
-	fmt.Printf("Performing request: %v\n", r)
 	resp, err := c.Do(r)
 	if err != nil {
 		fmt.Printf("Error performing request response: %v\n", err)
 		return nil, err
 	}
 
-	fmt.Printf("Got response: %v\n", resp)
 	if (resp.StatusCode != http.StatusOK) && (resp.StatusCode != http.StatusCreated) && (resp.StatusCode != http.StatusNoContent) {
 		return nil, fmt.Errorf("Unprocessable response code encountered: %v", resp.StatusCode)
 	}
