@@ -12,7 +12,7 @@ type Response struct {
 	Data []byte
 
 	// Body is the deserialized response body returned from an HTTP request.
-	Body map[string]interface{}
+	Body interface{}
 
 	// Error represents any error that may have occured during processing.
 	Error error

@@ -22,7 +22,7 @@ func JSONData(params interface{}) (*bytes.Buffer, error) {
 }
 
 // ParseJSON parses the data from an io.Reader into a map[string]interface{}.
-func ParseJSON(data io.Reader) (map[string]interface{}, error) {
+func ParseJSON(data io.Reader) (interface{}, error) {
 	jsonData, err := ioutil.ReadAll(data)
 	if err != nil {
 		fmt.Printf("Failed to read data with error %v\n", err)
@@ -36,10 +36,9 @@ func ParseJSON(data io.Reader) (map[string]interface{}, error) {
 			fmt.Printf("Failed to parse json with error: %v\n", err)
 			return nil, err
 		}
-		JSONMap := response.(map[string]interface{})
-		return JSONMap, err
+		return response, err
 	}
-	return map[string]interface{}{}, nil
+	return nil, nil
 }
 
 // PrettyPrint prints a JSON representation in an formatted manner to the
