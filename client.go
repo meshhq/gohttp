@@ -68,15 +68,15 @@ func (c *Client) Execute(req *Request) (*Response, error) {
 	var err error
 	switch req.Method {
 	case GET:
-		response, err = c.Get(req.URL)
+		response, err = c.Get(req)
 	case POST:
-		response, err = c.Post(req.URL, req.Body)
+		response, err = c.Post(req)
 	case DELETE:
-		response, err = c.Delete(req.URL)
+		response, err = c.Delete(req)
 	case PUT:
-		response, err = c.Put(req.URL, req.Body)
+		response, err = c.Put(req)
 	case PATCH:
-		response, err = c.Patch(req.URL, req.Body)
+		response, err = c.Patch(req)
 	}
 	if response != nil {
 		response.Request = req
@@ -85,79 +85,99 @@ func (c *Client) Execute(req *Request) (*Response, error) {
 }
 
 // Get performs an HTTP GET request with the supplied URL string.
-func (c *Client) Get(url string) (*Response, error) {
-	URL := c.BaseURL + url
+func (c *Client) Get(request *Request) (*Response, error) {
+	URL := c.BaseURL + request.URL
 	req, err := http.NewRequest("GET", URL, nil)
 	if err != nil {
 		return nil, err
 	}
 
+	// Add any request parameters
+	for key, value := range request.Params {
+		req.URL.Query().Add(key, value)
+	}
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
 
 // Post performs an HTTP POST request with the supplied URL string and
 // parameters.
-func (c *Client) Post(url string, params interface{}) (*Response, error) {
-	jsonData, err := JSONData(params)
+func (c *Client) Post(request *Request) (*Response, error) {
+	jsonData, err := JSONData(request.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	URL := c.BaseURL + url
+	URL := c.BaseURL + request.URL
 	req, err := http.NewRequest("POST", URL, jsonData)
 	if err != nil {
 		return nil, err
 	}
 
+	// Add any request parameters
+	for key, value := range request.Params {
+		req.URL.Query().Add(key, value)
+	}
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
 
 // Delete performs an HTTP DELETE request with the supplied URL string.
-func (c *Client) Delete(url string) (*Response, error) {
-	URL := c.BaseURL + url
+func (c *Client) Delete(request *Request) (*Response, error) {
+	URL := c.BaseURL + request.URL
 	req, err := http.NewRequest("DELETE", URL, nil)
 	if err != nil {
 		return nil, err
 	}
 
+	// Add any request parameters
+	for key, value := range request.Params {
+		req.URL.Query().Add(key, value)
+	}
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
 
 // Put performs an HTTP PUT request with the supplied URL string and
 // parameters.
-func (c *Client) Put(url string, params interface{}) (*Response, error) {
-	jsonData, err := JSONData(params)
+func (c *Client) Put(request *Request) (*Response, error) {
+	jsonData, err := JSONData(request.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	URL := c.BaseURL + url
+	URL := c.BaseURL + request.URL
 	req, err := http.NewRequest("PUT", URL, jsonData)
 	if err != nil {
 		return nil, err
 	}
 
+	// Add any request parameters
+	for key, value := range request.Params {
+		req.URL.Query().Add(key, value)
+	}
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
 
 // Patch performs an HTTP PATCH request with the supplied URL string and
 // parameters.
-func (c *Client) Patch(url string, params interface{}) (*Response, error) {
-	jsonData, err := JSONData(params)
+func (c *Client) Patch(request *Request) (*Response, error) {
+	jsonData, err := JSONData(request.Body)
 	if err != nil {
 		return nil, err
 	}
 
-	URL := c.BaseURL + url
+	URL := c.BaseURL + request.URL
 	req, err := http.NewRequest("PATCH", URL, jsonData)
 	if err != nil {
 		return nil, err
 	}
 
+	// Add any request parameters
+	for key, value := range request.Params {
+		req.URL.Query().Add(key, value)
+	}
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }

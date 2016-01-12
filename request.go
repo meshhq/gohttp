@@ -10,6 +10,9 @@ type Request struct {
 	// URL models the API route to be used for the request.
 	URL string
 
-	// Body models the request body to be used for the request.
+	// Params contains the URL parameters to be used with the request.
+	Params map[string]string
+
+	// Body contains the request body to be used for the request.
 	Body interface{}
 }
