@@ -93,9 +93,11 @@ func (c *Client) Get(request *Request) (*Response, error) {
 	}
 
 	// Add any request parameters
+	query := req.URL.Query()
 	for key, value := range request.Params {
-		req.URL.Query().Add(key, value)
+		query.Add(key, value)
 	}
+	req.URL.RawQuery = query.Encode()
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
@@ -115,9 +117,11 @@ func (c *Client) Post(request *Request) (*Response, error) {
 	}
 
 	// Add any request parameters
+	query := req.URL.Query()
 	for key, value := range request.Params {
-		req.URL.Query().Add(key, value)
+		query.Add(key, value)
 	}
+	req.URL.RawQuery = query.Encode()
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
@@ -131,9 +135,11 @@ func (c *Client) Delete(request *Request) (*Response, error) {
 	}
 
 	// Add any request parameters
+	query := req.URL.Query()
 	for key, value := range request.Params {
-		req.URL.Query().Add(key, value)
+		query.Add(key, value)
 	}
+	req.URL.RawQuery = query.Encode()
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
@@ -153,9 +159,11 @@ func (c *Client) Put(request *Request) (*Response, error) {
 	}
 
 	// Add any request parameters
+	query := req.URL.Query()
 	for key, value := range request.Params {
-		req.URL.Query().Add(key, value)
+		query.Add(key, value)
 	}
+	req.URL.RawQuery = query.Encode()
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
@@ -175,9 +183,11 @@ func (c *Client) Patch(request *Request) (*Response, error) {
 	}
 
 	// Add any request parameters
+	query := req.URL.Query()
 	for key, value := range request.Params {
-		req.URL.Query().Add(key, value)
+		query.Add(key, value)
 	}
+	req.URL.RawQuery = query.Encode()
 	req.Header = c.Headers
 	return c.performRequest(req, c.Client)
 }
