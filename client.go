@@ -196,18 +196,15 @@ func (c *Client) performRequest(r *http.Request, client *http.Client) (*Response
 	if (c.BasicAuthUserName != "") && (c.BasicAuthPassword != "") {
 		r.SetBasicAuth(c.BasicAuthUserName, c.BasicAuthPassword)
 	}
-
+	fmt.Printf("Request: %v\n", r)
 	resp, err := client.Do(r)
-	defer resp.Body.Close()
 	if err != nil {
 		fmt.Printf("Error performing request response: %v\n", err)
 		return nil, err
 	}
+	defer resp.Body.Close()
 
 	response, err := NewResponse(resp)
-	if (resp.StatusCode != http.StatusOK) && (resp.StatusCode != http.StatusCreated) && (resp.StatusCode != http.StatusNoContent) {
-		return response, fmt.Errorf("Unprocessable response code encountered: %v", resp.StatusCode)
-	}
 	return response, err
 }
 
