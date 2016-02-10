@@ -6,20 +6,17 @@ import (
 )
 
 const (
-	// GET is a constant for the HTTP GET method.
-	GET = "GET"
-
-	// POST is a constant for the HTTP POST method.
-	POST = "POST"
-
-	// DELETE is a constant for the HTTP DELETE method.
+	// HTTP Methods
+	GET    = "GET"
+	POST   = "POST"
 	DELETE = "DELETE"
+	PUT    = "PUT"
+	PATCH  = "PATCH"
 
-	// PUT is a constant for the HTTP PUT method.
-	PUT = "PUT"
-
-	// PATCH is a constant for the HTTP PATCH method.
-	PATCH = "PATCH"
+	// HTTP Headers
+	CONTENT_TYPE  = "Content-Type"
+	ACCEPT        = "Accept"
+	AUTHORIZATION = "Authorization"
 )
 
 // Client models an HTTP client
