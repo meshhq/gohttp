@@ -1,5 +1,66 @@
 {
-	"ImportPath": "github.com/mercambia/gohttp",
-	"GoVersion": "go1.5.1",
-	"Deps": []
+	"ImportPath": "github.com/meshhq/meshCore/lib/gohttp",
+	"GoVersion": "go1.6.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/cenk/backoff",
+			"Comment": "v1.0.0-5-ga603017",
+			"Rev": "a6030178a585d5972d4d33ce61f4a1fa40eaaed0"
+		},
+		{
+			"ImportPath": "github.com/fatih/color",
+			"Comment": "v0.1-19-g87d4004",
+			"Rev": "87d4004f2ab62d0d255e0a38f1680aa534549fe3"
+		},
+		{
+			"ImportPath": "github.com/garyburd/redigo/internal",
+			"Comment": "v1.0.0",
+			"Rev": "8873b2f1995f59d4bcdd2b0dc9858e2cb9bf0c13"
+		},
+		{
+			"ImportPath": "github.com/garyburd/redigo/redis",
+			"Comment": "v1.0.0",
+			"Rev": "8873b2f1995f59d4bcdd2b0dc9858e2cb9bf0c13"
+		},
+		{
+			"ImportPath": "github.com/getsentry/raven-go",
+			"Rev": "dffeb57df75d6a911f00232155194e43d79d38d7"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "1c83b3eabd45b6d76072b66b746c20815fb2872d"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "9c068cf16d982f8bd444b8c352acbeec34c4fe5b"
+		},
+		{
+			"ImportPath": "github.com/hjr265/redsync.go/redsync",
+			"Rev": "78ab70266420d120d06240e20115608be5b41ce3"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-colorable",
+			"Rev": "3dac7b4f76f6e17fb39b768b89e3783d16e237fe"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Rev": "56b76bdf51f7708750eac80fa38b952bb9f32639"
+		},
+		{
+			"ImportPath": "github.com/meshhq/meshCore/lib/gotils",
+			"Rev": "bb1efa0cf2588f7c3c36502a89aad394c4dcf9ce"
+		},
+		{
+			"ImportPath": "github.com/meshhq/meshCore/lib/meshLog",
+			"Rev": "bb1efa0cf2588f7c3c36502a89aad394c4dcf9ce"
+		},
+		{
+			"ImportPath": "github.com/meshhq/meshCore/lib/meshRedis",
+			"Rev": "bb1efa0cf2588f7c3c36502a89aad394c4dcf9ce"
+		},
+		{
+			"ImportPath": "gopkg.in/check.v1",
+			"Rev": "11d3bc7aa68e238947792f30573146a3231fc0f1"
+		}
+	]
 }
