@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/meshhq/gohttp.svg?branch=master)](https://travis-ci.org/meshhq/gohttp)
 
 An HTTP networking client written in go.
-test
+
 `GoHTTP` provides syntactic sugar built on top of the `net/http` package, designed to make integrating with JSON APIs from `golang` applications simple and easy.
 
 ## Features
@@ -105,7 +105,7 @@ The `Response` object contains parsed information about the outcome of an HTTP r
 ```go
 fmt.Printf("Code: %v\n", resonse.Code) 		// int containing the response code.
 fmt.Printf("Body: %v\n", resonse.Body) 		// interface{} containing the parsed response body.
-fmt.Printf("Request: %v\n", resonse.Request) 	// gohttp.Request object which is a pointer to the original request.
+fmt.Printf("Request: %v\n", resonse.Request) 	// `gohttp.Request` object which is a pointer to the original request.
 ```
 
 ### Retry
