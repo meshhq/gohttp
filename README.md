@@ -1,5 +1,8 @@
 ![alt text](Assets/gohttp.png)
+
 # GoHTTP
+======
+[![Build Status](https://travis-ci.org/meshhq/gohttp.svg?branch=master)](https://travis-ci.org/meshhq/gohttp)
 
 A simple HTTP client written in go.
 
