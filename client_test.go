@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/gorilla/mux"
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/meshhq/funnel"
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/meshhq/meshRedis"
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/gopkg.in/check.v1"
+	"github.com/gorilla/mux"
+	"github.com/meshhq/funnel"
+	"github.com/meshhq/meshRedis"
+	"gopkg.in/check.v1"
 )
 
 // Hook up gocheck into the "go test" runner.
