@@ -1,4 +1,4 @@
-![alt text](gopher.png)
+![alt text](Assets/gohttp.png)
 # GoHTTP
 
 A simple HTTP client written in go.
