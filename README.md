@@ -1,10 +1,7 @@
 ![alt text](Assets/gohttp.png)
-
-# GoHTTP
-======
 [![Build Status](https://travis-ci.org/meshhq/gohttp.svg?branch=master)](https://travis-ci.org/meshhq/gohttp)
 
-A simple HTTP client written in go.
+An HTTP networking client written in go.
 
 `GoHTTP` provides syntactic sugar built on top of the `net/http` package, designed to make integrating with JSON APIs from `golang` applications simple and easy.
 
