@@ -3,7 +3,7 @@ package gohttp
 import (
 	"time"
 
-	"github.com/meshhq/meshCore/lib/gohttp/Godeps/_workspace/src/github.com/cenk/backoff"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/cenk/backoff"
 )
 
 // GoHTTP Default backoff parameters.

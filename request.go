@@ -22,45 +22,45 @@ type Request struct {
 	// Params contains the URL parameters to be used with the request.
 	Params map[string]string
 
-	// Body contains the body to be used for the request.
+	// Body contains the JSON body to be used for the request. Body will be sent as application/json.
 	Body interface{}
 
-	// Data contains the form data to be used for the request. Data will be sent as application/x-www-form-urlencoded.
-	Data interface{}
+	// Form contains the form to be used for the request. Form will be sent as application/x-www-form-urlencoded.
+	Form interface{}
 }
 
 //------------------------------------------------------------------------------
 // Request Transalation
 //------------------------------------------------------------------------------
 
-// Translate translates a gohttp.Request object into an http.Request object.
+// Translate translates a `gohttp.Request` object into an `http.Request` object.
 func (r *Request) Translate(client *Client) (*http.Request, error) {
 	URL := client.BaseURL + r.URL
 
 	var err error
 	var req *http.Request
 	if r.Body != nil {
+		// Request with JSON body.
 		req, err = r.requestWithBody(r.Body, r.Method, URL)
 		if err != nil {
 			return nil, err
 		}
-	} else if r.Data != nil {
-		req, err = r.requestWithData(r.Data, r.Method, URL)
+	} else if r.Form != nil {
+		// Request with form data.
+		req, err = r.requestWithForm(r.Form, r.Method, URL)
 		if err != nil {
 			return nil, err
 		}
 	} else {
+		// Request without data.
 		req, err = http.NewRequest(r.Method, URL, nil)
 		if err != nil {
 			return nil, err
 		}
 	}
 
-	// Hydrate go request with prams from gohttp.Request object.
-	err = r.hydrateRequest(req, client)
-	if err != nil {
-		return nil, err
-	}
+	// Hydrate http.Request with details from gohttp.Request object.
+	r.hydrateRequest(req, client)
 
 	return req, nil
 }
@@ -68,22 +68,6 @@ func (r *Request) Translate(client *Client) (*http.Request, error) {
 //------------------------------------------------------------------------------
 // Helpers
 //------------------------------------------------------------------------------
-
-func (r *Request) hydrateRequest(req *http.Request, client *Client) error {
-	// Add request headers.
-	req.Header = r.headersForRequest(client.Headers)
-
-	// Setup basic auth if needed.
-	if client.BasicAuth != nil {
-		req.SetBasicAuth(client.BasicAuth.Username, client.BasicAuth.Password)
-	}
-
-	// Add request parameters.
-	if params := r.paramsForRequest(); params != "" {
-		req.URL.RawQuery = params
-	}
-	return nil
-}
 
 func (r *Request) requestWithBody(body interface{}, method string, url string) (*http.Request, error) {
 	jsonData, err := JSONData(body)
@@ -94,13 +78,28 @@ func (r *Request) requestWithBody(body interface{}, method string, url string) (
 	return http.NewRequest(method, url, jsonData)
 }
 
-func (r *Request) requestWithData(data interface{}, method string, url string) (*http.Request, error) {
-	formData, err := FormData(data)
+func (r *Request) requestWithForm(form interface{}, method string, url string) (*http.Request, error) {
+	formData, err := FormData(form)
 	if err != nil {
 		return nil, err
 	}
 
 	return http.NewRequest(method, url, formData)
+}
+
+func (r *Request) hydrateRequest(req *http.Request, client *Client) {
+	// Set basic auth if needed.
+	if client.BasicAuth != nil {
+		req.SetBasicAuth(client.BasicAuth.Username, client.BasicAuth.Password)
+	}
+
+	// Add request parameters.
+	if params := r.paramsForRequest(); params != "" {
+		req.URL.RawQuery = params
+	}
+
+	// Add request headers.
+	req.Header = r.combineClientHeaders(client.Headers)
 }
 
 func (r *Request) paramsForRequest() string {
@@ -111,13 +110,17 @@ func (r *Request) paramsForRequest() string {
 	return values.Encode()
 }
 
-func (r *Request) headersForRequest(headers http.Header) http.Header {
-	for key, values := range r.Header {
-		if len(headers.Get(key)) == 0 {
-			for _, headerValue := range values {
-				headers.Add(key, headerValue)
+func (r *Request) combineClientHeaders(headers http.Header) http.Header {
+	if r.Header == nil {
+		r.Header = headers
+	} else {
+		for key, values := range headers {
+			if len(r.Header.Get(key)) == 0 {
+				for _, headerValue := range values {
+					r.Header.Add(key, headerValue)
+				}
 			}
 		}
 	}
-	return headers
+	return r.Header
 }

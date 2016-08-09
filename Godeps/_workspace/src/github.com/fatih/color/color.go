@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/meshhq/meshCore/lib/gohttp/Godeps/_workspace/src/github.com/mattn/go-colorable"
-	"github.com/meshhq/meshCore/lib/gohttp/Godeps/_workspace/src/github.com/mattn/go-isatty"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/mattn/go-colorable"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/mattn/go-isatty"
 )
 
 // NoColor defines if the output is colorized or not. It's dynamically set to

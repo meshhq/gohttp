@@ -1,16 +1,10 @@
 {
-	"ImportPath": "github.com/meshhq/gohttp",
+	"ImportPath": "github.com/meshhq/funnel",
 	"GoVersion": "go1.6.2",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
-		{
-			"ImportPath": "github.com/ajg/form",
-			"Rev": "cc2954064ec9ea8d93917f0f87456e11d7b881ad"
-		},
-		{
-			"ImportPath": "github.com/cenk/backoff",
-			"Comment": "v1.0.0-5-ga603017",
-			"Rev": "a6030178a585d5972d4d33ce61f4a1fa40eaaed0"
-		},
 		{
 			"ImportPath": "github.com/fatih/color",
 			"Comment": "v0.1-19-g87d4004",
@@ -27,14 +21,6 @@
 			"Rev": "8873b2f1995f59d4bcdd2b0dc9858e2cb9bf0c13"
 		},
 		{
-			"ImportPath": "github.com/gorilla/context",
-			"Rev": "1c83b3eabd45b6d76072b66b746c20815fb2872d"
-		},
-		{
-			"ImportPath": "github.com/gorilla/mux",
-			"Rev": "9c068cf16d982f8bd444b8c352acbeec34c4fe5b"
-		},
-		{
 			"ImportPath": "github.com/hjr265/redsync.go/redsync",
 			"Rev": "78ab70266420d120d06240e20115608be5b41ce3"
 		},
@@ -45,10 +31,6 @@
 		{
 			"ImportPath": "github.com/mattn/go-isatty",
 			"Rev": "56b76bdf51f7708750eac80fa38b952bb9f32639"
-		},
-		{
-			"ImportPath": "github.com/meshhq/funnel",
-			"Rev": "1d2f5faa3f22b316fba06920851117a128c34002"
 		},
 		{
 			"ImportPath": "github.com/meshhq/meshLog",

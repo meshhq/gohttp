@@ -9,14 +9,14 @@ import (
 	"os"
 	"strings"
 
-	"github.com/ajg/form"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/ajg/form"
 )
 
 //------------------------------------------------------------------------------
 // JSON Data
 //------------------------------------------------------------------------------
 
-// JSONData mashalls an interface{} to a *byters.Buffer.
+// JSONData serializes an interface{} of JSON and converts to an `io.Reader`.
 func JSONData(values interface{}) (io.Reader, error) {
 	if values == nil {
 		return nil, nil
@@ -31,9 +31,10 @@ func JSONData(values interface{}) (io.Reader, error) {
 	return buffer, nil
 }
 
-// ParseJSON parses the data from an io.Reader into an interface{}.
-// This method utilizes the `UserNumber` feature of the json.Decoder which
-// converts any JSON number into a json.Number object.
+// ParseJSON parses the JSON data from an `io.Reader` into an `interface{}`.
+// This method utilizes the `UserNumber` feature of the `json.Decoder` which
+// causes the Decoder to unmarshal a number into an interface{} as a Number
+// instead of as a float64.
 func ParseJSON(data io.Reader) (interface{}, error) {
 	decoder := json.NewDecoder(data)
 	decoder.UseNumber()
@@ -51,7 +52,7 @@ func ParseJSON(data io.Reader) (interface{}, error) {
 // Form Data
 //------------------------------------------------------------------------------
 
-// FormData converts an interface{} to an io.Reader.
+// FormData ecodes from data from an interface{} and converts to an `io.Reader`.
 func FormData(data interface{}) (io.Reader, error) {
 	values, err := form.EncodeToValues(data)
 	if err != nil {
@@ -66,7 +67,7 @@ func FormData(data interface{}) (io.Reader, error) {
 // Pretty Print Data
 //------------------------------------------------------------------------------
 
-// PrettyPrint prints a JSON representation in an formatted manner.
+// PrettyPrint prints a JSON representation in a pretty printed manner.
 func PrettyPrint(item interface{}) {
 	b, err := json.Marshal(item)
 	if err != nil {

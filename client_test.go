@@ -4,12 +4,17 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"testing"
 	"time"
 
-	"github.com/meshhq/meshCore/lib/gohttp/Godeps/_workspace/src/github.com/gorilla/mux"
-	"github.com/meshhq/meshCore/lib/gohttp/Godeps/_workspace/src/gopkg.in/check.v1"
-	"github.com/meshhq/meshCore/lib/meshRedis"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/gorilla/mux"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/meshhq/funnel"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/meshhq/meshRedis"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/gopkg.in/check.v1"
 )
+
+// Hook up gocheck into the "go test" runner.
+func Test(t *testing.T) { check.TestingT(t) }
 
 type ClientTest struct{}
 
@@ -112,7 +117,7 @@ func (r *ClientTest) TestPostRequestWithForm(c *check.C) {
 	response, err := client.Execute(&Request{
 		Method: POST,
 		URL:    "/test",
-		Data:   map[string]interface{}{"name": "test"},
+		Form:   map[string]interface{}{"name": "test"},
 	})
 	c.Assert(err, check.IsNil)
 	c.Assert(response.Code, check.Equals, http.StatusCreated)
@@ -147,7 +152,7 @@ func (r *ClientTest) TestPutRequestWithForm(c *check.C) {
 	response, err := client.Execute(&Request{
 		Method: PUT,
 		URL:    "/test",
-		Data:   map[string]interface{}{"name": "test"},
+		Form:   map[string]interface{}{"name": "test"},
 	})
 	c.Assert(err, check.IsNil)
 	c.Assert(response.Code, check.Equals, http.StatusNoContent)
@@ -183,7 +188,7 @@ func (r *ClientTest) TestPatchRequestWithForm(c *check.C) {
 	response, err := client.Execute(&Request{
 		Method: PATCH,
 		URL:    "/test",
-		Data:   map[string]interface{}{"name": "test"},
+		Form:   map[string]interface{}{"name": "test"},
 	})
 	c.Assert(err, check.IsNil)
 	c.Assert(response.Code, check.Equals, http.StatusNoContent)
@@ -224,7 +229,7 @@ func (r *ClientTest) TestRetryScenario(c *check.C) {
 
 func (r *ClientTest) TestRateLimitingClient(c *check.C) {
 	client := NewClient(server.URL, nil)
-	client.SetRateLimiterInfo(&RateLimitInfo{
+	client.SetRateLimiterInfo(&funnel.RateLimitInfo{
 		Token:        fmt.Sprintf("%v", time.Now()),
 		MaxRequests:  10,   // 10 requests
 		TimeInterval: 1000, // per second
@@ -280,6 +285,5 @@ func HandleRetry(w http.ResponseWriter, r *http.Request) {
 
 func HandleLimit(w http.ResponseWriter, r *http.Request) {
 	requestCounter++
-	fmt.Printf("Woo %v\n", requestCounter)
 	w.WriteHeader(http.StatusOK)
 }

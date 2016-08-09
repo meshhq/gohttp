@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/meshhq/meshCore/lib/gohttp/Godeps/_workspace/src/github.com/mattn/go-isatty"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/mattn/go-isatty"
 )
 
 const (

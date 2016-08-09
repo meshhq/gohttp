@@ -28,6 +28,9 @@ type Response struct {
 
 	// Request is the gohttp.Request object used to generate the response.
 	Request *Request
+
+	// Raw is the raw http.Response.
+	Raw *http.Response
 }
 
 // NewResponse builds a `gohttp.Response` object from an `http.Response` object.
@@ -59,5 +62,6 @@ func NewResponse(resp *http.Response) (*Response, error) {
 		Code: resp.StatusCode,
 		Body: body,
 		Data: bodyContent,
+		Raw:  resp,
 	}, nil
 }

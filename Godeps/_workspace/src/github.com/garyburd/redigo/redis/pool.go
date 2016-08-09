@@ -25,7 +25,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/meshhq/meshCore/lib/gohttp/Godeps/_workspace/src/github.com/garyburd/redigo/internal"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/garyburd/redigo/internal"
 )
 
 var nowFunc = time.Now // for testing

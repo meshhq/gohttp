@@ -4,7 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/meshhq/meshCore/lib/gohttp/Godeps/_workspace/src/github.com/cenk/backoff"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/cenk/backoff"
+	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/meshhq/funnel"
 )
 
 // HTTP Methods
@@ -51,7 +52,7 @@ type Client struct {
 	Backoff *backoff.ExponentialBackOff
 
 	// RateLimiter is a rate limiter.
-	rateLimiter *RateLimiter
+	rateLimiter *funnel.RateLimiter
 
 	// goClient is the underlying `http.Client` that is used to issue requests.
 	goClient *http.Client
@@ -94,15 +95,20 @@ func (c *Client) SetBasicAuth(username string, password string) {
 //------------------------------------------------------------------------------
 
 // SetRateLimiterInfo provides..
-func (c *Client) SetRateLimiterInfo(limitInfo *RateLimitInfo) {
-	c.rateLimiter = NewRateLimiter(limitInfo)
+func (c *Client) SetRateLimiterInfo(limitInfo *funnel.RateLimitInfo) error {
+	limiter, err := funnel.NewLimiter(limitInfo)
+	if err != nil {
+		return err
+	}
+	c.rateLimiter = limiter
+	return nil
 }
 
 //------------------------------------------------------------------------------
 // Request Execution
 //------------------------------------------------------------------------------
 
-// Execute executes the HTTP request described with the given `gohttp.Request`.
+// Execute executes the HTTPc request described with the given `gohttp.Request`.
 func (c *Client) Execute(req *Request) (*Response, error) {
 	var err error
 	var response *Response
