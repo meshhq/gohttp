@@ -1,9 +1,9 @@
 ![alt text](gopher.png)
 # GoHTTP
 
-A simple and fun http client written in go.
+A simple HTTP client written in go.
 
-`GoHTTP` provides syntactic sugar built on top of the `net/http` package, designed to make interacting with JSON APIs from `golang` applications simple and easy.
+`GoHTTP` provides syntactic sugar built on top of the `net/http` package, designed to make integrating with JSON APIs from `golang` applications simple and easy.
 
 ## Features
 
@@ -13,17 +13,18 @@ A simple and fun http client written in go.
 - [x] Header and method constants
 - [x] Retry with exponential backoff
 - [x] Rate limiting backed by Redis
-- [x] JSON parsing and pretty printing
+- [x] Response JSON parsing
+- [x] JSON pretty printing
 - [x] Full documentation
 - [x] Comprehensive Unit Test Coverage
 
 #### Roadmap
 
-- [ ] Optional logging of requests.
 - [ ] HTTP status code validation
 - [ ] TLS Certificate and Public Key Pinning
 - [ ] File upload and download.
 - [ ] Transfer progress reporting
+- [ ] Optional logging of requests.
 
 ## Install
 
@@ -34,32 +35,32 @@ $ go get github.com/meshhq/gohttp
 ## Documentation
 
 ## Getting started
+---
 
 ### Example
 
-GET request.
+GET request
 
 ```go
+request := gohttp.Request{Method: gohttp.GET}
 client := gohttp.NewClient("api.google.com", nil)
-request := &gohttp.Request{
-	Method: gohttp.GET,
-}
-response, err := client.Execute(request)
+response, err := client.Execute(&request)
 ```
 
-POST request.
+POST request
 
 ```go
-client := gohttp.NewClient("api.google.com", nil)
 request := &gohttp.Request{
 	Method: gohttp.POST,
 	URL:    "/users",
 	Body: 	map[string]interface{}{"first_name": "Kevin"},
 }
+client := gohttp.NewClient("api.google.com", nil)
 response, err := client.Execute(request)
 ```
 
 ### Client
+---
 
 All requests are executed with a `Client`. `Client` objects can hold global parameters such as a baseURL or a set of headers. Global parameters will be applied to each request that is executed by the `Client`.
 
@@ -70,6 +71,7 @@ client := gohttp.NewClient(baseURL, headers)
 ```
 
 ### Request
+---
 
 `gohttp` provides a `Request` object which makes building HTTP request simple and readable. The `URL` parameter of a request is relative to the `baseURL` parameter of a the `Client` that executes it.
 
@@ -83,6 +85,7 @@ response, err := client.Execute(request)
 ```
 
 ### Request Execution
+---
 
 A call to the `Execute` method on a `Client` object will return a `Response` object and an `error` that describes any failure that occurred.
 
@@ -95,6 +98,7 @@ gohttp.PrettyPrint(response)
 ```
 
 ### Response  
+---
 
 The `Response` object contains parsed information about the outcome of an HTTP request. It also includes a `Request` parameter which is a pointer to the original request.
 
@@ -105,6 +109,7 @@ fmt.Printf("Request: %v\n", resonse.Request) 	// gohttp.Request object which is 
 ```
 
 ### Retry
+---
 
 `GoHTTP` implements sophisticated retry logic with exponential backoff. Applications can configure the status codes for which an application should retry a request via the `RetryableStatusCodes` parameter on a `Client` object.
 
@@ -122,8 +127,9 @@ client.Backoff = backOff
 ```
 
 ### Rate Limiting
+---
 
-GoHTTP provides robust, out of the box rate limiting support. This makes it very easy to conform with rate limiting policies published by APIs. Underneath the hood, `GoHTTP`
+GoHTTP provides robust, out of the box rate limiting support. This makes it very easy to conform with rate limiting policies published by APIs. Underneath the hood, `GoHTTP` leverages the [Funnel](https://github.com/meshhq/funnel), a distributed rate limiter backed by redis.
 
 #### Limit Info
 

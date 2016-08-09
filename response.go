@@ -10,8 +10,7 @@ import (
 // Response models a response from HTTP request.
 //
 // The GoHTTP Response object provides a convenient model for handling the
-// result of an HTTP request. It aditionally contains the request that was
-// executed in order to generate the request.
+// result of an HTTP request.
 type Response struct {
 
 	// Code is the response code for the request.
