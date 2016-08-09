@@ -1,6 +1,7 @@
 package gohttp
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -260,6 +261,7 @@ func (r *ClientTest) TestRateLimitingClient(c *check.C) {
 func RouteRequest() http.Handler {
 	mux := mux.NewRouter()
 	mux.HandleFunc("/test", HandleTest)
+	mux.HandleFunc("/json", HandleJSON)
 	mux.HandleFunc("/retry", HandleRetry)
 	mux.HandleFunc("/limit", HandleLimit)
 	return mux
@@ -276,6 +278,13 @@ func HandleTest(w http.ResponseWriter, r *http.Request) {
 	case PUT, PATCH, DELETE:
 		w.WriteHeader(http.StatusNoContent)
 	}
+}
+
+func HandleJSON(w http.ResponseWriter, r *http.Request) {
+	responseData, _ := json.Marshal(map[string]interface{}{"test": "test"})
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+	w.Write(responseData)
 }
 
 func HandleRetry(w http.ResponseWriter, r *http.Request) {

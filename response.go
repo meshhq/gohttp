@@ -28,9 +28,6 @@ type Response struct {
 
 	// Request is the gohttp.Request object used to generate the response.
 	Request *Request
-
-	// Raw is the raw http.Response.
-	Raw *http.Response
 }
 
 // NewResponse builds a `gohttp.Response` object from an `http.Response` object.
@@ -42,7 +39,7 @@ func NewResponse(resp *http.Response) (*Response, error) {
 
 	var body interface{}
 	if len(bodyContent) > 0 {
-		canonicalHeaderKey := http.CanonicalHeaderKey("Content-Type")
+		canonicalHeaderKey := http.CanonicalHeaderKey(ContentType)
 		for _, headerVal := range resp.Header[canonicalHeaderKey] {
 			if strings.Contains(headerVal, "application/json") {
 				body, err = ParseJSON(bytes.NewReader(bodyContent))
@@ -62,6 +59,5 @@ func NewResponse(resp *http.Response) (*Response, error) {
 		Code: resp.StatusCode,
 		Body: body,
 		Data: bodyContent,
-		Raw:  resp,
 	}, nil
 }
