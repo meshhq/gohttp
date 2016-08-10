@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"unsafe"
 
-	"github.com/meshhq/funnel/Godeps/_workspace/src/github.com/mattn/go-isatty"
+	"github.com/mattn/go-isatty"
 )
 
 const (

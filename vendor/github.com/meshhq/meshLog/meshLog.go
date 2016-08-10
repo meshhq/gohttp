@@ -6,7 +6,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/meshhq/funnel/Godeps/_workspace/src/github.com/fatih/color"
+	"github.com/fatih/color"
 )
 
 // LogLevel indicates the level of logging

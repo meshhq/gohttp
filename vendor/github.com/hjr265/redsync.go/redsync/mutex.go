@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/meshhq/funnel/Godeps/_workspace/src/github.com/garyburd/redigo/redis"
+	"github.com/garyburd/redigo/redis"
 )
 
 const (
