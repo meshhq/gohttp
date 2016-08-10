@@ -9,7 +9,7 @@ import (
 
 type RequestTest struct{}
 
-var _ = check.Suite(&gRequestTest{})
+var _ = check.Suite(&RequestTest{})
 
 func (r *RequestTest) TestTransalatingJSONRequest(c *check.C) {
 	header := http.Header{}
