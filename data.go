@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/ajg/form"
+	"github.com/ajg/form"
 )
 
 //------------------------------------------------------------------------------

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/gopkg.in/check.v1"
+	"gopkg.in/check.v1"
 )
 
 type RequestTest struct{}

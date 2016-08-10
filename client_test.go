@@ -8,10 +8,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/gorilla/mux"
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/meshhq/funnel"
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/meshhq/meshRedis"
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/gopkg.in/check.v1"
+	"github.com/gorilla/mux"
+	"github.com/meshhq/funnel"
+	"github.com/meshhq/meshRedis"
+	"gopkg.in/check.v1"
 )
 
 // Hook up gocheck into the "go test" runner.
@@ -230,11 +230,12 @@ func (r *ClientTest) TestRetryScenario(c *check.C) {
 
 func (r *ClientTest) TestRateLimitingClient(c *check.C) {
 	client := NewClient(server.URL, nil)
-	client.SetRateLimiterInfo(&funnel.RateLimitInfo{
+	err := client.SetRateLimiterInfo(&funnel.RateLimitInfo{
 		Token:        fmt.Sprintf("%v", time.Now()),
 		MaxRequests:  10,   // 10 requests
 		TimeInterval: 1000, // per second
 	})
+	c.Assert(err, check.IsNil)
 
 	// Execute 100 Requests
 	for i := 0; i < 100; i++ {

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/cenk/backoff"
-	"github.com/meshhq/gohttp/Godeps/_workspace/src/github.com/meshhq/funnel"
+	"github.com/cenk/backoff"
+	"github.com/meshhq/funnel"
 )
 
 // HTTP Methods

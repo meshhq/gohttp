@@ -1,6 +1,7 @@
 {
 	"ImportPath": "github.com/meshhq/gohttp",
-	"GoVersion": "go1.6.2",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v74",
 	"Deps": [
 		{
 			"ImportPath": "github.com/ajg/form",
@@ -13,7 +14,7 @@
 		},
 		{
 			"ImportPath": "github.com/fatih/color",
-			"Comment": "v0.1-19-g87d4004",
+			"Comment": "v0.2.0",
 			"Rev": "87d4004f2ab62d0d255e0a38f1680aa534549fe3"
 		},
 		{
@@ -48,7 +49,7 @@
 		},
 		{
 			"ImportPath": "github.com/meshhq/funnel",
-			"Rev": "1d2f5faa3f22b316fba06920851117a128c34002"
+			"Rev": "32a3ad66a7ab4858fa81384aacd3d76aae6174b1"
 		},
 		{
 			"ImportPath": "github.com/meshhq/meshLog",
@@ -57,6 +58,10 @@
 		{
 			"ImportPath": "github.com/meshhq/meshRedis",
 			"Rev": "53079a5a8aac9c55ee0cf5fa22878a692f0b9b77"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "a646d33e2ee3172a661fc09bca23bb4889a41bc8"
 		},
 		{
 			"ImportPath": "gopkg.in/check.v1",
