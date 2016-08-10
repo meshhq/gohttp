@@ -156,3 +156,8 @@ client.SetRateLimiterInfo(info)
 ```
 
 Applications can concurrently execute requests to the same client from as many `goroutines` as they wish. The `Client` will handle queuing requests with redis, and ensure that the rate limit is not breached and all requests are executed.
+
+### Contributing
+PRs are welcome, but will be rejected unless test coverage is updated
+- [Taylor Halliday](https://github.com/tayhalla)
+- [Kevin Coleman](https://github.com/kcoleman731)
