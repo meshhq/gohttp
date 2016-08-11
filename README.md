@@ -12,7 +12,7 @@ An HTTP networking client written in go.
 1. **Rate Limiting** - Most public APIs are going to have some form of rate limiting requirements. GoHTTP leverages [Funnel](github.com/meshhq/funnel) to make conforming to these rate limits trivial.
 2. **Retry w/ Exponential BackOff** - Systems can fail or error in the wild and applications should be resilient. `GoHTTP` makes it easy for applications to specify the HTTP status codes that should result in a retry. `GoHTTP` retries using an exponential backoff algorithm powered by [Exponential Backoff](https://github.com/cenk/backoff).
 
-`GoHTTP` also provides syntactic sugar on top of the `net/http` package that makes networking easier from go applications.
+`GoHTTP` also provides syntactic sugar on top of the `net/http` package that makes networking easier from go applications (i.e. applications can use maps for request and response JSON bodies).
 
 ## Features
 
@@ -111,10 +111,31 @@ fmt.Printf("Request: %v\n", response.Request) 	// `gohttp.Request` object which 
 
 #### Pretty Printing
 
-Applications can also pretty print response objects via the `GoHTTP` convenience method `PrettyPrint`.
+Applications can also pretty print response objects via the `GoHTTP` convenience method `PrettyPrint`. This method is very useful when debugging http requests.
 
 ```go
 gohttp.PrettyPrint(response)
+```
+
+Example `PrettyPrint` output.
+
+```json
+{
+	"Code": 201,
+	"Data": "",
+	"Body": null,
+	"Error": null,
+	"Request": {
+		"Method": "POST",
+		"Header": {},
+		"URL": "/test",
+		"Params": null,
+		"Body": {
+			"name": "test"
+		},
+		"Form": null
+	}
+}
 ```
 
 ### Retry
