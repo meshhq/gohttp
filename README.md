@@ -104,9 +104,9 @@ fmt.Printf("Response: %v", response)
 The `Response` object contains parsed information about the outcome of an HTTP request.
 
 ```go
-fmt.Printf("Code: %v\n", resonse.Code) 		// int containing the response code.
-fmt.Printf("Body: %v\n", resonse.Body) 		// interface{} containing the parsed response body.
-fmt.Printf("Request: %v\n", resonse.Request) 	// `gohttp.Request` object which is a pointer to the original request.
+fmt.Printf("Code: %v\n", response.Code) 		// int containing the response code.
+fmt.Printf("Body: %v\n", response.Body) 		// interface{} containing the parsed response body.
+fmt.Printf("Request: %v\n", response.Request) 	// `gohttp.Request` object which is a pointer to the original request.
 ```
 
 #### Pretty Printing
