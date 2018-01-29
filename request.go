@@ -20,13 +20,19 @@ type Request struct {
 	URL string
 
 	// Params contains the URL parameters to be used with the request.
-	Params map[string]string
+	Params []Param
 
 	// Body contains the JSON body to be used for the request. Body will be sent as application/json.
 	Body interface{}
 
 	// Form contains the form to be used for the request. Form will be sent as application/x-www-form-urlencoded.
 	Form interface{}
+}
+
+type Param struct {
+	Key string
+
+	Value string
 }
 
 //------------------------------------------------------------------------------
@@ -104,8 +110,8 @@ func (r *Request) hydrateRequest(req *http.Request, client *Client) {
 
 func (r *Request) paramsForRequest() string {
 	values := url.Values{}
-	for key, value := range r.Params {
-		values.Add(key, value)
+	for _, param := range r.Params {
+		values.Add(param.Key, param.Value)
 	}
 	return values.Encode()
 }

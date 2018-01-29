@@ -18,15 +18,18 @@ func (r *RequestTest) TestTransalatingJSONRequest(c *check.C) {
 	client := NewClient("", header)
 	url := "api.google.com"
 	method := POST
-	body := map[string]interface{}{"test": "body"}
-	params := map[string]string{"test": "params"}
+	form := map[string]interface{}{"test": "body"}
+	param := Param{
+		Key:   "test",
+		Value: "params",
+	}
+	params := []Param{param}
 	request := Request{
 		URL:    url,
 		Method: method,
-		Body:   body,
+		Form:   form,
 		Params: params,
 	}
-
 	translated, err := request.Translate(client)
 	c.Assert(err, check.Equals, nil)
 	c.Assert(translated.Method, check.Equals, method)
@@ -43,7 +46,11 @@ func (r *RequestTest) TestTransalatingFormRequest(c *check.C) {
 	url := "api.google.com"
 	method := POST
 	form := map[string]interface{}{"test": "body"}
-	params := map[string]string{"test": "params"}
+	param := Param{
+		Key:   "test",
+		Value: "params",
+	}
+	params := []Param{param}
 	request := Request{
 		URL:    url,
 		Method: method,
