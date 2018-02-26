@@ -22,7 +22,7 @@ type Response struct {
 	// Body is the deserialized response body returned from an request.
 	Body interface{}
 
-	// Error is an error that may have occured during the request.
+	// Error is an error that may have occurred during the request.
 	Error error
 
 	// Request is the gohttp.Request object used to generate the response.
