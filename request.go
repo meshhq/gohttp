@@ -36,7 +36,7 @@ type Param struct {
 }
 
 //------------------------------------------------------------------------------
-// Request Transalation
+// Request Translation
 //------------------------------------------------------------------------------
 
 // Translate translates a `gohttp.Request` object into an `http.Request` object.
@@ -69,6 +69,19 @@ func (r *Request) Translate(client *Client) (*http.Request, error) {
 	r.hydrateRequest(req, client)
 
 	return req, nil
+}
+
+//------------------------------------------------------------------------------
+// Params
+//------------------------------------------------------------------------------
+
+// SetParam adds a new request parameter.
+func (r *Request) SetParam(key string, value string) {
+	param := Param{
+		Key:   key,
+		Value: value,
+	}
+	r.Params = append(r.Params, param)
 }
 
 //------------------------------------------------------------------------------
