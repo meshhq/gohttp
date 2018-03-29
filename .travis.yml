@@ -5,8 +5,3 @@ go:
 
 services:
   - redis-server
-
-before_script:
-- go get -u gopkg.in/alecthomas/gometalinter.v2
-- gometalinter.v2 --install &> /dev/null
-- gometalinter.v2 ./...
