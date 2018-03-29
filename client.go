@@ -28,12 +28,12 @@ const (
 
 // Client models an HTTP client.
 //
-// A GoHTTP Glient can contain global request parameters, such as a BaseURL,
+// A GoHTTP Client can contain global request parameters, such as a BaseURL,
 // a set of Headers, or Basic Authentication Credentials. All global parameters
 // will be applied to each request executed by the client.
 //
 // The GoHTTP client also has built in support support for retry (with
-// exponetial backoff and rate limiting.
+// exponential backoff and rate limiting).
 type Client struct {
 
 	// BaseURL is base URL used for all requests executed by the client.
@@ -51,7 +51,7 @@ type Client struct {
 	// Backoff ...
 	Backoff *backoff.ExponentialBackOff
 
-	// RateLimiter is a rate limiter.
+	// rateLimiter is a rate limiter.
 	rateLimiter *funnel.RateLimiter
 
 	// goClient is the underlying `http.Client` that is used to issue requests.
@@ -59,7 +59,7 @@ type Client struct {
 }
 
 //------------------------------------------------------------------------------
-// Initailization
+// Initialization
 //------------------------------------------------------------------------------
 
 // NewClient instantiates a new instance of a gohttp.Client.
@@ -220,7 +220,7 @@ func (c *Client) executeRequest(req *http.Request) (*Response, error) {
 		// an error to signal a retry should occur
 		for _, code := range c.RetryableStatusCodes {
 			if code == parsedResponse.Code {
-				return errors.New("Encountered retryable status code.")
+				return errors.New("encountered retryable status code")
 			}
 		}
 		return nil

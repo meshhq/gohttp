@@ -29,6 +29,7 @@ type Request struct {
 	Form interface{}
 }
 
+// Param holds the key/value pair associated with a parameter on a Request
 type Param struct {
 	Key string
 
@@ -36,7 +37,7 @@ type Param struct {
 }
 
 //------------------------------------------------------------------------------
-// Request Transalation
+// Request Translation
 //------------------------------------------------------------------------------
 
 // Translate translates a `gohttp.Request` object into an `http.Request` object.
