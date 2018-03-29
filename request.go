@@ -73,6 +73,19 @@ func (r *Request) Translate(client *Client) (*http.Request, error) {
 }
 
 //------------------------------------------------------------------------------
+// Params
+//------------------------------------------------------------------------------
+
+// SetParam adds a new request parameter.
+func (r *Request) SetParam(key string, value string) {
+	param := Param{
+		Key:   key,
+		Value: value,
+	}
+	r.Params = append(r.Params, param)
+}
+
+//------------------------------------------------------------------------------
 // Helpers
 //------------------------------------------------------------------------------
 
