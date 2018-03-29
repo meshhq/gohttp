@@ -2,6 +2,7 @@ package gohttp
 
 import (
 	"bytes"
+	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -59,4 +60,9 @@ func NewResponse(resp *http.Response) (*Response, error) {
 		Body: body,
 		Data: bodyContent,
 	}, nil
+}
+
+// Unmarshal unmarshalls response data to a struct.
+func (r *Response) Unmarshal(i interface{}) error {
+	return json.Unmarshal(r.Data, i)
 }
